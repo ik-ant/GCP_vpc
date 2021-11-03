@@ -35,67 +35,43 @@ variable "subnets" {
   type = list(map(string))
 }
 
+#=========================
 
+# variable "network_name" {
+#   description = "The name of the network where routes will be created"
+# }
+
+variable "routes" {
+  type        = list(map(string))
+  description = "List of routes being created in this VPC"
+  default     = []
+}
+
+variable "module_depends_on" {
+  description = "List of modules or resources this module depends on."
+  type        = list(any)
+  default     = []
+}
 
 
 #===========================FIREWALL_RULES============================
 
-#-----------------------PRESENTATION FIREWALL-------------------------
-variable "presentation_tags" {
-  type = list(string)
-  default = [ "" ]
+variable "firewall_rules" {
+  description = "List of custom rule definitions (refer to variables file for syntax)."
+  default     = []
+  type = list(object({
+    name                    = string
+    direction               = string
+    ranges                  = list(string)
+    source_tags             = list(string)
+    target_tags             = list(string)
+    allow = list(object({
+      protocol = string
+      ports    = list(string)
+    }))
+    deny = list(object({
+      protocol = string
+      ports    = list(string)
+    }))
+  }))
 }
-
-variable "presentation_protocol" {
-  type = string
-  default = "tcp"
-}
-
-variable "presentation_ports" {
-  type = list(string)
-  default = [ "" ]
-}
-
-#----------------------APPLICATION FIREWALL---------------------------
-variable "app_firewall_ingress_range" {
-  type = list(string)
-  default = ["10.0.1.0/24"]
-}
-
-variable "app_tags" {
-  type = list(string)
-  default = [ "" ]
-}
-
-variable "app_protocol" {
-  type = string
-  default = ""
-}
-
-variable "app_ports" {
-  type = list(string)
-  default = [ "" ]
-}
-
-
-#--------------------DATABASE FIREWALL-------------------------------
-variable "db_firewall_ingress_range" {
-  type = list(string)
-  default = [ "10.0.2.0/24" ]
-}
-
-variable "db_tags" {
-  type = list(string)
-  default = [""]
-}
-
-variable "db_protocol" {
-  type = string
-  default = ""
-}
-
-variable "db_ports" {
-  type = list(string)
-  default = [""]
-}
-
