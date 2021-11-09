@@ -1,17 +1,21 @@
 provider "google" {
-  project = "playground-s-11-e26b5c80"
+  project = "playground-s-11-e357a44f" #
   region = "us-central1"
   zone = "us-centrall1-c"
 
-  credentials = file("playground-s-11-e26b5c80-2ceb4ad04ed2.json")
+  credentials = file("playground-s-11-e357a44f-3228e1d554c1.json")
 }
 
-# module "gke" {
-#   source = "../kubernetes"
-#   network = module.network.vpc_name
-#   subnetwork = module.network.subnetwork_name
-#   machine_type = "g1-small"
-# }
+module "gke" {
+  source = "./kubernetes"
+  network = module.network.vpc_name
+  subnetwork =  "application-subnet"   #module.network.subnet_name[2]
+  machine_type = "g1-small"
+  app_tags = ["application"]
+  # depends_on = [
+  #   module.network.subnets
+  # ]
+}
 
 module "network" {
   source = "./network"

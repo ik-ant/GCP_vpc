@@ -35,11 +35,7 @@ variable "subnets" {
   type = list(map(string))
 }
 
-#=========================
-
-# variable "network_name" {
-#   description = "The name of the network where routes will be created"
-# }
+#============================= ROUTES =================================
 
 variable "routes" {
   type        = list(map(string))
