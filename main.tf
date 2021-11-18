@@ -18,7 +18,7 @@ provider "google" {
 module "google_networks" {
   source = "./networks"
 
-  nat_subnet_name = "application-subnet"
+  nat_subnet_name = "application-subnet "
 
   #==========================SUBNETS=============================
   subnets = [
